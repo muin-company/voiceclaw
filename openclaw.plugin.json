@@ -1,0 +1,52 @@
+{
+  "id": "voiceclaw",
+  "name": "VoiceClaw",
+  "version": "0.1.0",
+  "description": "Voice assistant plugin — wake word, STT, TTS for OpenClaw",
+  "entry": "./dist/index.js",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "stt": {
+        "type": "object",
+        "properties": {
+          "engine": {
+            "type": "string",
+            "enum": ["sensevoice", "faster-whisper", "whisper"],
+            "default": "sensevoice"
+          },
+          "model": { "type": "string", "default": "base" },
+          "language": { "type": "string", "default": "ko" }
+        }
+      },
+      "tts": {
+        "type": "object",
+        "properties": {
+          "engine": {
+            "type": "string",
+            "enum": ["edge-tts", "piper", "say"],
+            "default": "edge-tts"
+          },
+          "voice": { "type": "string", "default": "ko-KR-SunHiNeural" }
+        }
+      },
+      "wakeWord": { "type": "string", "default": "미르야" },
+      "vad": {
+        "type": "object",
+        "properties": {
+          "threshold": { "type": "number", "default": 0.5 },
+          "silenceDuration": { "type": "number", "default": 0.5 }
+        }
+      },
+      "autoStart": { "type": "boolean", "default": false },
+      "pythonPath": {
+        "type": "string",
+        "description": "Path to Python 3.9+ binary. Defaults to bundled venv."
+      },
+      "agentId": { "type": "string", "default": "main" },
+      "sessionKey": { "type": "string" }
+    }
+  },
+  "skills": ["skills/voiceclaw"]
+}

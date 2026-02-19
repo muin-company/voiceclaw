@@ -1,0 +1,6 @@
+node_modules/
+dist/
+python/venv/
+python/__pycache__/
+python/voiceclaw/__pycache__/
+*.js.map

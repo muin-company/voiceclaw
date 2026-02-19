@@ -4,7 +4,7 @@
 
 ## Features
 
-- 🗣️ **Wake word** — "Hey Claw" triggers voice interaction
+- 🗣️ **Wake word** — configurable trigger (default: "미르야")
 - 🎤 **STT** — SenseVoice (primary), faster-whisper, OpenAI Whisper
 - 🔊 **TTS** — Edge TTS, Piper, macOS `say`
 - 🧠 **Agent integration** — Voice input goes directly to your OpenClaw agent
@@ -14,30 +14,37 @@
 
 ```
 Node.js (OpenClaw plugin)  ◄── JSON-RPC stdio ──►  Python (audio/ML)
-├── service.ts (lifecycle)                           ├── vad.py (Silero VAD)
+├── index.ts (entry)                                 ├── vad.py (Silero VAD)
 ├── bridge.ts (IPC)                                  ├── stt.py (SenseVoice/Whisper)
-├── commands.ts (/voiceclaw)                         ├── tts.py (Edge TTS/Piper)
-├── gateway-methods.ts (RPC)                         ├── audio.py (PyAudio)
-└── tools.ts (voice_speak)                           └── server.py (JSON-RPC server)
+│                                                    ├── tts.py (Edge TTS)
+│                                                    └── audio.py (PyAudio)
 ```
 
-## Quick Start
+## Installation
 
 ```bash
-# Install
-openclaw plugins install @openclaw/voiceclaw
+# Install as OpenClaw plugin
+cd ~/voiceclaw
+openclaw plugins install .
 
-# Setup Python deps
-openclaw voiceclaw install
-
-# Start
-openclaw voiceclaw start
-# or in chat: /voiceclaw start
+# Install Python dependencies
+bash scripts/install-python.sh
 ```
 
-## Config
+## Usage
 
-In `openclaw.yaml`:
+```bash
+# Via chat command
+/voiceclaw start
+/voiceclaw stop
+/voiceclaw status
+
+# Via Gateway RPC
+# voiceclaw.status
+# voiceclaw.config {action: "get"}
+```
+
+## Configuration (`openclaw.yaml`)
 
 ```yaml
 plugins:
@@ -51,18 +58,17 @@ plugins:
         tts:
           engine: edge-tts
           voice: ko-KR-SunHiNeural
-        wakeWord: "hey claw"
+        wakeWord: "미르야"
+        vad:
+          threshold: 0.5
         autoStart: false
+        agentId: main
 ```
 
-## Design
+## Development
 
-See [DESIGN.md](DESIGN.md) for full architecture, bridge protocol, and component details.
-
-## Status
-
-🚧 **Design phase** — migrating from [openclaw-voice](https://github.com/muin-company/openclaw-voice) to plugin standard.
-
-## License
-
-MIT
+```bash
+npm install
+npm run build    # TypeScript → dist/
+npm run dev      # Watch mode
+```
