@@ -65,6 +65,16 @@ plugins:
         agentId: main
 ```
 
+## Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| No audio input detected | Check System Settings → Privacy → Microphone permissions |
+| PyAudio install fails | Run `brew install portaudio` first, then retry |
+| Wake word not triggering | Lower `vad.threshold` (e.g., 0.3) in config |
+| TTS no sound output | Verify audio output device; try `say "test"` in terminal |
+| Python bridge won't start | Ensure `python3 -m pip list` shows all deps from `requirements.txt` |
+
 ## Development
 
 ```bash
@@ -72,3 +82,7 @@ npm install
 npm run build    # TypeScript → dist/
 npm run dev      # Watch mode
 ```
+
+## License
+
+MIT © [MUIN](https://muin.company)
