@@ -10,9 +10,9 @@
     "prepare": "tsc"
   },
   "openclaw": {
-    "extensions": {
-      "plugin": "openclaw.plugin.json"
-    }
+    "extensions": [
+      "openclaw.plugin.json"
+    ]
   },
   "devDependencies": {
     "typescript": "^5.0.0",
